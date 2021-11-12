@@ -38,14 +38,26 @@ async function run() {
       res.json(result)
     })
 
+
+
     app.get("/orders", async (req, res) => {
-      const email = req.query.email;
-      const query = {email: email}
-      console.log(query);
-      const cursor = ordersCollection.find(query);
-      const orders = await cursor.toArray();
-      res.json(orders)
+      const cursor = ordersCollection.find({});
+      const order = await cursor.toArray();
+      res.json(order)
     })
+
+
+
+    // app.get("/orders", async (req, res) => {
+    //   const email = req.query.email;
+    //   const query = {email: email}
+    //   console.log(query);
+    //   const cursor = ordersCollection.find(query);
+    //   const orders = await cursor.toArray();
+    //   res.json(orders)
+    // })
+
+    
 
 
     app.post("/orders", async (req, res) => {
@@ -56,11 +68,7 @@ async function run() {
     })
 
 
-    app.get("/orders", async (req, res) => {
-      const cursor = ordersCollection.find({});
-      const order = await cursor.toArray();
-      res.json(order)
-    })
+    
 
     // app.post("/users", async (req, res) => {
     //   const user = req.body;
