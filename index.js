@@ -46,6 +46,39 @@ async function run() {
       res.json(order)
     })
 
+    app.get("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await ordersCollection.findOne(query);
+      res.json(result)
+    })
+
+
+    app.put("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateStatus = req.body;
+      const filter = { _id: ObjectId(id) }
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          status: `Shifted`
+
+        }
+
+      };
+      const result = await ordersCollection.updateOne(filter, updateDoc, options)
+      // console.log("updating user",req);
+      res.json(result)
+    })
+
+
+    app.delete("/orders/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await ordersCollection.deleteOne(query);
+      res.json(result)
+    })
+
 
 
     // app.get("/orders", async (req, res) => {
@@ -57,7 +90,7 @@ async function run() {
     //   res.json(orders)
     // })
 
-    
+
 
 
     app.post("/orders", async (req, res) => {
@@ -68,7 +101,7 @@ async function run() {
     })
 
 
-    
+
 
     // app.post("/users", async (req, res) => {
     //   const user = req.body;
@@ -77,7 +110,7 @@ async function run() {
     //   res.json(result);
     // })
 
-    
+
 
     app.put("/users", async (req, res) => {
       const user = req.body;
@@ -99,17 +132,17 @@ async function run() {
 
     app.get('/users/:email', async (req, res) => {
       const email = req.params.email;
-      const query = {Email: email};
+      const query = { Email: email };
       const user = await usersCollection.findOne(query);
       let isAdmin = false;
       if (user?.role === 'admin') {
         isAdmin = true;
-        
+
       }
-      res.json({admin: isAdmin})
+      res.json({ admin: isAdmin })
     })
 
-    
+
 
   }
   finally {
