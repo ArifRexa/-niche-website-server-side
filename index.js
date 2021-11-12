@@ -38,6 +38,13 @@ async function run() {
       res.json(result)
     })
 
+    app.delete("/watches/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await watchesCollection.deleteOne(query);
+      res.json(result)
+    })
+
 
 
     app.get("/orders", async (req, res) => {
