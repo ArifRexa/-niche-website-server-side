@@ -24,6 +24,7 @@ async function run() {
     const watchesCollection = database.collection("watches")
     const ordersCollection = database.collection("orders")
     const usersCollection = database.collection("users")
+    const reviewsCollection = database.collection("reviews")
 
     /*================================ Watches Section ===============================*/
 
@@ -145,6 +146,22 @@ async function run() {
       res.json({ admin: isAdmin })
     })
 
+
+
+    app.get("/reviews", async (req, res) => {
+      const cursor = reviewsCollection.find({});
+      const review = await cursor.toArray();
+      res.json(review)
+    })
+
+    app.put("/reviews", async (req, res) => {
+      const review = req.body;
+      const filter = { email: review.email };
+      const options = { upsert: true };
+      const updateDoc = { $set: review };
+      const result = await reviewsCollection.updateOne(filter, updateDoc, options);
+      res.json(result);
+    })
 
 
   }
