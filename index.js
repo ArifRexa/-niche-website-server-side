@@ -148,6 +148,7 @@ async function run() {
 
 
 
+    /*================================ Revires Section ===============================*/
     app.get("/reviews", async (req, res) => {
       const cursor = reviewsCollection.find({});
       const review = await cursor.toArray();
@@ -174,7 +175,7 @@ run().catch(console.dir)
 
 
 app.get('/', (req, res) => {
-  res.send('Welcome to watches world')
+  res.send('Welcome To KBO Watches World')
 })
 
 app.listen(port, () => {
